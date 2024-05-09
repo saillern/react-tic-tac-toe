@@ -29,6 +29,9 @@ const Body = styled.body`
   background: #fefefe;
 `
 
+const Header = styled.div`
+  padding:16px;
+`
 const Title = styled.h1`
   font-size: 1.2rem;
   text-align: center;
@@ -42,7 +45,13 @@ const Container = styled.div`
 `
 const DisplayTurn = styled.div`
   display: flex;
+  justify-content: center;
+`
+
+const TurnSymbol = styled.div`
   padding: 8px 16px;
+  font-size: 1.2rem;
+  font-weight: bold;
 `
 const Table = styled.div`
   border: 1px solid black;
@@ -91,14 +100,18 @@ function Board(){
 export default function RunGame(){
   return(
     <Body>
-      <main>
-        <Container>
-          <Title>Tic Tac Toe</Title>
-          <DisplayTurn>
-          </DisplayTurn>
+      <Container>
+        <div>
+          <Header>
+            <Title>Tic Tac Toe</Title>
+            <DisplayTurn>
+              <TurnSymbol>○</TurnSymbol>
+              <TurnSymbol>×</TurnSymbol>
+            </DisplayTurn>
+          </Header>
           <Board></Board>
-        </Container>
-      </main>
+        </div>
+      </Container>
     </Body>
   )
 }
