@@ -29,25 +29,40 @@ function Cell({value,cellClickAction}){
 
 export default function Board(){
     const [cells, setCells] = useState(Array(9).fill(null));
-    function cellClick(){
-        console.log("clicked")
+    const [turn,setTurn] = useState(1);
+    const PATTERN = {
+        circle: "○",
+        cross: "×"
+    }
+    function cellClick(i){
+        if(!cells[i]){
+            const nextCells = cells.slice();
+            if( turn%2){
+                nextCells[i] = PATTERN.circle;
+            }
+            else{
+                nextCells[i] = PATTERN.cross;
+            }
+            setCells(nextCells);
+            setTurn(turn + 1);
+        }
     }
     return(
         <Table>
             <TableRow>
-                <Cell value={cells[0]} cellClickAction={cellClick} />
-                <Cell value={cells[1]} cellClickAction={cellClick} />
-                <Cell value={cells[2]} cellClickAction={cellClick} />
+                <Cell value={cells[0]} cellClickAction={() => cellClick(0)} />
+                <Cell value={cells[1]} cellClickAction={() => cellClick(1)} />
+                <Cell value={cells[2]} cellClickAction={() => cellClick(2)} />
             </TableRow>
             <TableRow>
-                <Cell value={cells[3]} cellClickAction={cellClick} />
-                <Cell value={cells[4]} cellClickAction={cellClick} />
-                <Cell value={cells[5]} cellClickAction={cellClick} />
+                <Cell value={cells[3]} cellClickAction={() => cellClick(3)} />
+                <Cell value={cells[4]} cellClickAction={() => cellClick(4)} />
+                <Cell value={cells[5]} cellClickAction={() => cellClick(5)} />
             </TableRow>
             <TableRow>
-                <Cell value={cells[6]} cellClickAction={cellClick} />
-                <Cell value={cells[7]} cellClickAction={cellClick} />
-                <Cell value={cells[8]} cellClickAction={cellClick} />
+                <Cell value={cells[6]} cellClickAction={() => cellClick(6)} />
+                <Cell value={cells[7]} cellClickAction={() => cellClick(7)} />
+                <Cell value={cells[8]} cellClickAction={() => cellClick(8)} />
             </TableRow>
         </Table>
     );
