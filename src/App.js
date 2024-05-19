@@ -1,5 +1,6 @@
 import styled  from "styled-components"
 import Board  from "./Board";
+import { useState } from "react";
 
 
 const Container = styled.div`
@@ -9,7 +10,11 @@ const Container = styled.div`
   -weblit-box-pack: center;
   justify-content: center;
   height: 100vh;
+  font-family: Lato, "Lucida Grande", "Lucida Sans Unicode", Tahoma, sans-serif;
+  line-height: 1.5;
+  font-size: 15px;
 `
+
 const Main = styled.div`
   box-sizing: border-box;
 `
@@ -17,6 +22,7 @@ const Main = styled.div`
 const Header = styled.div`
   padding: 16px;
 `
+
 const Title = styled.h1`
   text-align: center;
   font-size: 1.2rem;
@@ -27,11 +33,12 @@ const Turn = styled.div`
   -webkit-box-pack: center;
   justify-content: center;
 `
+
 const Symbol = styled.div`
   padding: 8px 16px;
   font-size: 1.2rem;
   font-weight: bold;
-  border-bottom: 0px;
+  ${props => props.$circleTurn ? 'border-bottom: 0px': 'border-bottom: 3px solid  black'};
 `
 
 const Footer = styled.div`
@@ -47,53 +54,111 @@ const Message = styled.div`
   padding: 8px;
 `
 
-const DisplayTurn = styled.div`
-  border-bottom: 3px solid black;
+const ResetBtn = styled.a`
+  display: inline-block;
+  text-align: center;
+  border: 3px solid black;
+  border-radius: 6px;
+  font-weight: bold;
+  padding: 4px 16px;
+  &:hover{
+      cursor: pointer;
+  }
 `
+const STATE_MESSAGE = {
+    play : "processing",
+    circleWin : "○ win!!",
+    crossWin : "× win!!",
+    draw : "draw",
+}
+
+
+const PATTERN = {
+    circle: "○",
+    cross: "×"
+}
+
+const WIN_PATTERN = [
+    [0,1,2],[3,4,5],[6,7,8],
+    [0,3,6],[1,4,7],[2,5,8],
+    [0,4,8],[2,4,6]
+]
+
 
 function TurnSymbol({turn}){
-  if(turn%2){
-    return(
-      <Turn>
-        <Symbol> <DisplayTurn>○ </DisplayTurn></Symbol>
-        <Symbol>✕</Symbol>
-      </Turn>
-    );
-  }
-  else{
-    return(
-      <Turn>
-        <Symbol>○</Symbol>
-        <Symbol DisplayTurn>✕</Symbol>
-      </Turn>
-    );
-  }
-}
-
-function GameStatus(){
-  /* To do */
-  const STATE_MESSAGE = {
-      play : "processing",
-      win : "win!!",
-      draw : "draw",
-  }
+  const circleTurn = turn%2
   return(
-    <Message>processing</Message>
+    <Turn>
+      <Symbol $circleTurn = {!circleTurn}>○ </Symbol>
+      <Symbol $circleTurn = {circleTurn}>✕</Symbol>
+    </Turn>
   );
 }
+
+function GameStatus({footerText}){
+  return(
+    <Message>{STATE_MESSAGE[footerText]}</Message>
+  );
+}
+
 export default function Game(){
+  const [turn, setTurn] = useState(1);
+  const [cells, setCells] = useState(Array(9).fill(null));
+  const [win, setWin] = useState(false);
+  const [status,setStatus] = useState("play");
+
+
+  function gameReset(){
+    setTurn(1);
+    setCells(cells.fill(null));
+    setWin(false);
+    setStatus("play");
+  }
+  const nextCells = cells.slice();
+  function cellClick(i){
+    if(!cells[i] && !win){
+        if( turn%2){
+            nextCells[i] = PATTERN.circle;
+        }
+        else{
+            nextCells[i] = PATTERN.cross;
+        }
+        setCells(nextCells);
+        setTurn(turn + 1);
+    }
+    const winner = WinCheck(nextCells)
+    if(winner && !win ){
+      setWin(winner)
+      setStatus(turn%2? "circleWin": "crossWin")
+    }
+    if(!win && (turn > 8)){
+      setStatus("draw")
+    }
+  }
+
   return (
     <Container>
       <Main>
         <Header>
           <Title>Tic Tac Toe</Title>
-          <TurnSymbol turn = {4} />
+          <TurnSymbol turn ={turn} />
         </Header>
-        <Board />
+        <Board  turn = {turn} cells = {cells}  cellClick = {cellClick}/>
         <Footer>
-          <GameStatus />
+          <GameStatus footerText={status} />
+          <ResetBtn onClick={gameReset}>Restart</ResetBtn>
         </Footer>
       </Main>
     </Container>
   )
+}
+
+function WinCheck(cells){
+  for(let i = 0; i < WIN_PATTERN.length; i++){
+    const [a,b,c] = WIN_PATTERN[i];
+    if( cells[a] && cells[a] === cells[b] && cells[a] === cells[c]){
+      return true;
+    }
+  }
+  return false;
 }

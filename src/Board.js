@@ -1,6 +1,4 @@
 import styled  from "styled-components"
-import { useState } from "react";
-
 
 const Square = styled.div`
     width: 3rem;
@@ -8,14 +6,22 @@ const Square = styled.div`
     font-size: 2rem;
     text-align: center;
     border-right: 1px solid black;
+    &:last-child{
+        border-right: 0px;
+    }
     &:hover{
         cursor: pointer;
     }
 `;
 
+
 const TableRow = styled.div`
     display: flex;
     border-bottom: 1px solid black;
+    &:last-child{
+        border-bottom: 0px;
+    }
+
 `
 
 const Table = styled.div`
@@ -27,26 +33,7 @@ function Cell({value,cellClickAction}){
     );
 }
 
-export default function Board(){
-    const [cells, setCells] = useState(Array(9).fill(null));
-    const [turn,setTurn] = useState(1);
-    const PATTERN = {
-        circle: "○",
-        cross: "×"
-    }
-    function cellClick(i){
-        if(!cells[i]){
-            const nextCells = cells.slice();
-            if( turn%2){
-                nextCells[i] = PATTERN.circle;
-            }
-            else{
-                nextCells[i] = PATTERN.cross;
-            }
-            setCells(nextCells);
-            setTurn(turn + 1);
-        }
-    }
+export default function Board({turn,cells,cellClick}){
     return(
         <Table>
             <TableRow>
