@@ -63,12 +63,14 @@ const ResetBtn = styled.a`
   padding: 4px 16px;
   &:hover{
       cursor: pointer;
+      color: white;
+      background: black;
   }
 `
 const STATE_MESSAGE = {
     play : "processing",
-    circleWin : "○ win!!",
-    crossWin : "× win!!",
+    circleWin : "○ win",
+    crossWin : "× win",
     draw : "draw",
 }
 
