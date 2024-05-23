@@ -1,8 +1,17 @@
-import styled  from "styled-components"
+import styled, { createGlobalStyle }  from "styled-components"
 import Board  from "./Board";
 import { useState } from "react";
 
-
+const GlobalStyle = createGlobalStyle`
+  html{
+    font-family: 'Lato', 'Lucida Grande', "Lucida Sans Unicode", Tahoma, Sans-Serif;
+    line-height: 1.5;
+    font-size: 15px;
+  };
+  *,*:before,*:after {
+    box-sizing: border-box;
+  }
+`
 const Container = styled.div`
   display: flex;
   -webkit-box-align: center;
@@ -10,9 +19,6 @@ const Container = styled.div`
   -weblit-box-pack: center;
   justify-content: center;
   height: 100vh;
-  font-family: Lato, "Lucida Grande", "Lucida Sans Unicode", Tahoma, sans-serif;
-  line-height: 1.5;
-  font-size: 15px;
 `
 
 const Main = styled.div`
@@ -110,7 +116,7 @@ export default function Game(){
   const [status,setStatus] = useState("play");
 
 
-  function gameReset(){
+  function GameReset(){
     setTurn(1);
     setCells(cells.fill(null));
     setWin(false);
@@ -140,6 +146,7 @@ export default function Game(){
 
   return (
     <Container>
+    <GlobalStyle />
       <Main>
         <Header>
           <Title>Tic Tac Toe</Title>
@@ -148,7 +155,7 @@ export default function Game(){
         <Board  turn = {turn} cells = {cells}  cellClick = {cellClick}/>
         <Footer>
           <GameStatus footerText={status} />
-          <ResetBtn onClick={gameReset}>Restart</ResetBtn>
+          <ResetBtn onClick={GameReset}>Restart</ResetBtn>
         </Footer>
       </Main>
     </Container>
