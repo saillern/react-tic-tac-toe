@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/saillern/react-tic-tac-toe.git/static/css/main.e090315e.css",
-    "main.js": "/saillern/react-tic-tac-toe.git/static/js/main.34b09bf0.js",
-    "static/js/453.70f66972.chunk.js": "/saillern/react-tic-tac-toe.git/static/js/453.70f66972.chunk.js",
-    "index.html": "/saillern/react-tic-tac-toe.git/index.html",
-    "main.e090315e.css.map": "/saillern/react-tic-tac-toe.git/static/css/main.e090315e.css.map",
-    "main.34b09bf0.js.map": "/saillern/react-tic-tac-toe.git/static/js/main.34b09bf0.js.map",
-    "453.70f66972.chunk.js.map": "/saillern/react-tic-tac-toe.git/static/js/453.70f66972.chunk.js.map"
+    "main.css": "/react-tic-tac-toe/static/css/main.e090315e.css",
+    "main.js": "/react-tic-tac-toe/static/js/main.6a98b48f.js",
+    "static/js/453.70f66972.chunk.js": "/react-tic-tac-toe/static/js/453.70f66972.chunk.js",
+    "index.html": "/react-tic-tac-toe/index.html",
+    "main.e090315e.css.map": "/react-tic-tac-toe/static/css/main.e090315e.css.map",
+    "main.6a98b48f.js.map": "/react-tic-tac-toe/static/js/main.6a98b48f.js.map",
+    "453.70f66972.chunk.js.map": "/react-tic-tac-toe/static/js/453.70f66972.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e090315e.css",
-    "static/js/main.34b09bf0.js"
+    "static/js/main.6a98b48f.js"
   ]
 }
