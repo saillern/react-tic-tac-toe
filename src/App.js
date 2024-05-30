@@ -124,22 +124,19 @@ export default function Game(){
   }
   const nextCells = cells.slice();
   function cellClick(i){
-    if(!cells[i] && !win){
-        if( turn%2){
-            nextCells[i] = PATTERN.circle;
-        }
-        else{
-            nextCells[i] = PATTERN.cross;
-        }
-        setCells(nextCells);
-        setTurn(turn + 1);
+    if(cells[i] || win){
+      return
     }
+    const circleTurn = turn % 2 === 0
+    nextCells[i] = circleTurn? PATTERN.cross: PATTERN.circle;
+    setCells(nextCells);
+    setTurn(turn + 1);
     const winner = WinCheck(nextCells)
-    if(winner && !win ){
+    if(winner){
       setWin(winner)
       setStatus(turn%2? "circleWin": "crossWin")
     }
-    if(!win && (turn > 8)){
+    if(turn > 8){
       setStatus("draw")
     }
   }
